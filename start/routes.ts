@@ -27,7 +27,7 @@ Route.get('/', async () => {
 Route.post('/login', 'AuthController.login')
 Route.post('/logout', 'AuthController.logout').middleware('auth')
 
-Route.get('/check-auth', async ({ auth }) => {
-  console.log(auth)  // Deve exibir o objeto `auth`
-  return { message: 'Auth is available' }
-})
+Route.group(() => {
+  Route.get('admins', 'Admin/AdminController.index')
+  Route.resource('mines', 'Admin/MinesController').apiOnly()
+}).prefix('admin').middleware(['auth', 'role:admin'])
