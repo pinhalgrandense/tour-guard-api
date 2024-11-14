@@ -30,4 +30,5 @@ Route.post('/logout', 'AuthController.logout').middleware('auth')
 Route.group(() => {
   Route.get('admins', 'Admin/AdminController.index')
   Route.resource('mines', 'Admin/MinesController').apiOnly()
+  Route.resource('managers', 'Admin/ManagersController').apiOnly()
 }).prefix('admin').middleware(['auth', 'role:admin'])
