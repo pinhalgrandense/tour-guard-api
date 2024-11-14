@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import Manager from './Manager'
 
 export default class Mine extends BaseModel {
   public static table = 'mines'  // Especifica o nome da tabela
@@ -36,4 +37,7 @@ export default class Mine extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @belongsTo(() => Manager, { foreignKey: 'admin_id' })
+  public manager: BelongsTo<typeof Manager>
 }
