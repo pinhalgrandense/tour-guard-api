@@ -4,7 +4,11 @@ import Mine from 'App/Models/Mine'
 export default class MinesController {
   // Listar todas as minas
   public async index({ response }: HttpContextContract) {
-    const mines = await Mine.all()
+    const mines = await Mine.query()
+      .preload('manager', (query) => {
+        query.preload('user')
+      }
+      )
     return response.ok(mines)
   }
 
