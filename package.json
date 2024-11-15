@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
-    "start": "node server.js",
+    "start": "node build/server.js",
     "test": "node ace test",
     "migrate": "node ace migration:run --force",
     "seed": "node ace db:seed",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build && npm run start"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.3.1",
