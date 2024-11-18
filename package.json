@@ -7,7 +7,7 @@
     "build": "node ace build --production",
     "start": "node ./build/server.js",
     "test": "node ace test",
-    "migrate": "node ace migration:run --force",
+    "migrate": "node ace migration:run",
     "seed": "node ace db:seed",
     "heroku-postbuild": "npm run build && npm run start"
   },
