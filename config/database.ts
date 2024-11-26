@@ -19,7 +19,7 @@ const databaseConfig: DatabaseConfig = {
   | file.
   |
   */
-  connection: Env.get("DB_CONNECTION", "postgres"),
+  connection: Env.get("DB_CONNECTION", "pg"),
 
   connections: {
     /*
@@ -33,9 +33,9 @@ const databaseConfig: DatabaseConfig = {
     | npm i pg
     |
     */
-    postgres: {
+    pg: {
       client: "pg",
-      connection: {
+      connection: Env.get("DATABASE_URL", {
         host: Env.get("PG_HOST"),
         port: Env.get("PG_PORT"),
         user: Env.get("PG_USER"),
@@ -44,7 +44,7 @@ const databaseConfig: DatabaseConfig = {
         ssl: {
           rejectUnauthorized: false,
         },
-      },
+      }),
       migrations: {
         naturalSort: true,
       },
