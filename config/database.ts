@@ -44,6 +44,7 @@ const databaseConfig: DatabaseConfig = {
         ssl: true,
         extra: {
           ssl: {
+            require: true,
             rejectUnauthorized: false,
           },
         },
