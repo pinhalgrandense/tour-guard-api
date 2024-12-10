@@ -46,6 +46,7 @@ Route.group(() => {
   );
   Route.put("/mines/:id", "Manager/MinesController.update");
   Route.get("/mines", "Manager/MinesController.index");
+  Route.get("/mines/:id", "Manager/MinesController.show");
   Route.resource("/managers", "Manager/ManagerController").apiOnly();
 
   Route.get("/mines/:mineId/regions", "Manager/RegionsController.index");

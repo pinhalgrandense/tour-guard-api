@@ -20,6 +20,33 @@ export default class MinesController {
     }
   }
 
+  public async show({ params, auth, response }: HttpContextContract) {
+    try {
+      const manager = auth.user;
+      if (!manager) {
+        return response.unauthorized({ message: "Não autorizado." });
+      }
+
+      const mine = await Mine.query()
+        .where("id", params.id)
+        .andWhere("admin_id", manager.id)
+        .first();
+
+      if (!mine) {
+        return response.notFound({
+          message: "Mina não encontrada ou não pertence a você.",
+        });
+      }
+
+      return response.ok({ mine });
+    } catch (error) {
+      console.error(error);
+      return response.internalServerError({
+        message: "Erro ao buscar a mina.",
+      });
+    }
+  }
+
   public async update({
     params,
     request,
