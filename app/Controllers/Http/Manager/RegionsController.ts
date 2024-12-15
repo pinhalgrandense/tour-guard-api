@@ -37,6 +37,36 @@ export default class RegionsController {
     }
   }
 
+  public async show({ auth, params, response }: HttpContextContract) {
+    try {
+      const manager = auth.user;
+      if (!manager) {
+        return response.unauthorized({ message: "Não autorizado." });
+      }
+
+      // Verificar se a região pertence a uma mina gerenciada pelo gestor
+      const region = await Region.query()
+        .where("id", params.id)
+        .andWhereHas("mine", (query) => {
+          query.where("admin_id", manager.id);
+        })
+        .first();
+
+      if (!region) {
+        return response.notFound({
+          message: "Região não encontrada ou não pertence a uma mina sua.",
+        });
+      }
+
+      return response.ok({ region });
+    } catch (error) {
+      console.error(error);
+      return response.internalServerError({
+        message: "Erro ao listar a região.",
+      });
+    }
+  }
+
   /**
    * Cria uma nova região associada a uma mina.
    */
